@@ -258,7 +258,7 @@ with st.expander("Data Status"):
 
     st.markdown("---")
 
-    if BQ_AVAILABLE:
+    if BQ_AVAILABLE or DEMO_MODE:
         freshness = get_data_freshness()
         coverage = get_data_coverage()
     else:
