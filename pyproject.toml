@@ -1,0 +1,52 @@
+[project]
+name = "northern-sauna-marketing-analytics-demo"
+version = "0.1.0"
+description = "Public synthetic-data demo of the Northern Sauna marketing analytics Streamlit dashboard."
+requires-python = ">=3.11"
+dependencies = [
+    "google-cloud-bigquery>=3.25",
+    "google-analytics-data>=0.18.0,<1.0.0",
+    "google-api-python-client>=2.100.0,<3.0.0",
+    "google-auth>=2.20.0,<3.0.0",
+    "requests>=2.31",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "structlog>=24.1",
+    "sqlglot>=26.0",
+    "google-cloud-bigquery-datatransfer>=3.21.0",
+    "google-auth-oauthlib>=1.0,<2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-mock>=3.12",
+    "ruff>=0.5",
+    "responses>=0.25",
+    "faker>=22.0",  # demo data generator (scripts/generate_demo_data.py)
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["streamlit*"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "streamlit"]
+markers = [
+    "parity: live BigQuery parity check (Members page vs chatbot SQL); opt-in via `pytest -m parity`. Skipped from default runs.",
+]
+# Default-deselect parity tests so plain `pytest` doesn't hit BigQuery.
+# Run them explicitly with `pytest -m parity` (which overrides this filter).
+addopts = ["-m", "not parity"]

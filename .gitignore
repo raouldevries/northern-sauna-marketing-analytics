@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+streamlit/.streamlit/secrets.toml
+client_secret.json
+
+# CSVs outside the demo fixture dir
+*.csv
+!demo_data/*.csv
+
+# Build / dist
+build/
+dist/
+
+# Editor
+.vscode/
+.idea/
+
+# Audit-loop local state (skill: ~/.claude/skills/audit-loop)
+.claude/audit-loop.local.*

@@ -1,0 +1,20 @@
+[server]
+enableXsrfProtection = true
+enableCORS = true
+address = "0.0.0.0"
+port = 8501
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showSidebarNavigation = false
+showErrorDetails = "none"
+
+[theme]
+base = "light"
+primaryColor = "#1a1a2e"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#fafafa"
+textColor = "#1a1a2e"
+font = "sans serif"
