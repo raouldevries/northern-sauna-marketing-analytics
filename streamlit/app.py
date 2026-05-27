@@ -2,7 +2,6 @@ import hmac
 import logging
 import os
 from datetime import datetime, timedelta
-from pathlib import Path
 
 # Read DEMO_MODE before any other import so downstream modules
 # (bq_data_loader, data.*) can short-circuit their own secret access.
@@ -167,12 +166,6 @@ if not st.session_state.authenticated:
     col1, col2, col3 = st.columns([1, 1.5, 1])
     with col2:
         st.markdown("<div style='height: 80px'></div>", unsafe_allow_html=True)
-
-        # Northern Sauna logo centered using columns
-        _, logo_col, _ = st.columns([1.5, 1, 1.5])
-        with logo_col:
-            logo = str(Path(__file__).parent / "assets" / "logo_black.svg")
-            st.image(logo, use_container_width=True)
 
         st.markdown(
             "<h2 style='text-align: center; margin-bottom: 0.5rem;'>"

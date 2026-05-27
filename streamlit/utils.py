@@ -1,12 +1,6 @@
 from __future__ import annotations
 
-import base64
-from pathlib import Path
-
 import streamlit as st
-
-_LOGO_SVG_RAW = (Path(__file__).parent / "assets" / "logo_black.svg").read_bytes()
-LOGO_B64 = base64.b64encode(_LOGO_SVG_RAW).decode()
 
 # ---------------------------------------------------------------------------
 # Sidebar navigation
@@ -109,7 +103,11 @@ def render_sidebar_nav(feedback_page: str = "", feedback_tabs: list[str] | None 
 
 
 def render_header(subtitle: str | None = None) -> None:
-    """Render the app header with inline SVG logo and title."""
+    """Render the app header — title (and optional subtitle) only.
+
+    No logo by design — see `git log` for the rebrand commit that
+    dropped the original brand mark.
+    """
     subtitle_html = ""
     if subtitle:
         subtitle_html = (
@@ -118,9 +116,7 @@ def render_header(subtitle: str | None = None) -> None:
 
     st.markdown(
         "<style>"
-        ".ns-header{display:flex;align-items:center;gap:14px;padding:0 0 1.5rem 0;margin-top:-1.3rem}"
-        ".ns-header__logo{flex-shrink:0;height:44px;width:44px}"
-        ".ns-header__logo img{height:100%;width:100%}"
+        ".ns-header{padding:0 0 1.5rem 0;margin-top:-1.3rem}"
         ".ns-header__text{display:flex;flex-direction:column;gap:2px}"
         ".ns-header__title{font-size:1.75rem;font-weight:700;color:#1a1a2e;"
         "line-height:1.2;margin:0;font-family:-apple-system,BlinkMacSystemFont,"
@@ -137,9 +133,6 @@ def render_header(subtitle: str | None = None) -> None:
         "[data-testid='stHorizontalBlock']:has([data-testid='stMetric']) { margin-bottom: 0.75rem; }\n"
         "</style>"
         '<div class="ns-header">'
-        '<div class="ns-header__logo">'
-        f'<img src="data:image/svg+xml;base64,{LOGO_B64}" alt="Northern Sauna logo">'
-        "</div>"
         '<div class="ns-header__text">'
         '<span class="ns-header__title">Northern Sauna Analytics</span>'
         f"{subtitle_html}"
