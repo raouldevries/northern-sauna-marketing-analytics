@@ -173,5 +173,5 @@ def get_available_locations(df, location_col=None):
 
     locations = df[location_col].dropna().unique().tolist()
     return sorted(
-        [loc for loc in locations if pd.notna(loc) and str(loc).lower().startswith("northern_sauna")]
+        [loc for loc in locations if pd.notna(loc) and str(loc).lower().startswith("northern sauna")]
     )

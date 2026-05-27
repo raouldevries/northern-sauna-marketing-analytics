@@ -1014,8 +1014,7 @@ def _write(out_dir: Path, name: str, df: pd.DataFrame) -> None:
 
 def main(out_dir: Path) -> None:
     # Locale is en_US so synthetic customer names don't accidentally embed
-    # tokens that look like the live build's account labels (e.g., Dutch
-    # surnames "Noord-/Zuid-/Strand-" patterns).
+    # tokens that look like the live build's account labels.
     faker = Faker("en_US")
     Faker.seed(FAKER_SEED)
     faker.seed_instance(FAKER_SEED)

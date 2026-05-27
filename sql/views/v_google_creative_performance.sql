@@ -268,7 +268,6 @@ google_concept_map AS (
     -- Legacy single-token forms preserved for label parity with
     -- the previous view (asset rankings still group by 'Östermalm' / 'Södermalm').
     STRUCT('östermalm' AS pattern, 'Östermalm' AS concept),
-    STRUCT('östermalm' AS pattern, 'Östermalm' AS concept),
     STRUCT('södermalm' AS pattern, 'Södermalm' AS concept)
   ])
 ),

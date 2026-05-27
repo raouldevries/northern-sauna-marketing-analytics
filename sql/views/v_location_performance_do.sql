@@ -76,7 +76,6 @@ meta_concept_map AS (
     STRUCT('waterfront' AS pattern, 'Stockholm Waterfront' AS concept),
     STRUCT('marine' AS pattern, 'Stockholm Waterfront' AS concept),
     STRUCT('östermalm' AS pattern, 'Östermalm' AS concept),
-    STRUCT('östermalm' AS pattern, 'Östermalm' AS concept),
     STRUCT('södermalm' AS pattern, 'Södermalm' AS concept),
     STRUCT('stockholm city' AS pattern, 'Stockholm City' AS concept),
     STRUCT('helsinki city' AS pattern, 'Helsinki City' AS concept),
@@ -127,7 +126,6 @@ cluster_overrides AS (
   SELECT cluster, child FROM UNNEST([
     STRUCT('Stockholm City' AS cluster, 'Östermalm' AS child),
     STRUCT('Stockholm City' AS cluster, 'Södermalm' AS child),
-    STRUCT('Stockholm City' AS cluster, 'Stockholm Waterfront' AS child),
     STRUCT('Stockholm City' AS cluster, 'Stockholm Waterfront' AS child),
     STRUCT('Stockholm City' AS cluster, 'Stockholm North' AS child),
     STRUCT('Stockholm City' AS cluster, 'Stockholm Waterside' AS child),

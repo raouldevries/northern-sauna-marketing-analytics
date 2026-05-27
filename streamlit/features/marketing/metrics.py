@@ -185,7 +185,7 @@ def calculate_location_actual_cpa(
     """Per-location actual CPA from `v_location_performance`.
 
     Per-location only — the caller is responsible for routing
-    "Alle locaties" to the legacy combined_df path. The view contains
+    "All locations" to the legacy combined_df path. The view contains
     only mapped rows, so summing platform spend across all locations
     would silently drop unmapped funnel spend and overstate the headline.
 

@@ -139,7 +139,7 @@ else:
 
         # Keep only Northern Sauna locations
         cap_data = cap_data[
-            cap_data["location"].str.lower().str.startswith("northern_sauna")
+            cap_data["location"].str.lower().str.startswith("northern sauna")
         ].copy()
 
         # Calculate avg booking value from data

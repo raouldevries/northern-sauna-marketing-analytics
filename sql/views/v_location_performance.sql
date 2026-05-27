@@ -84,7 +84,6 @@ meta_concept_map AS (
     STRUCT('marine' AS pattern, 'Stockholm Waterfront' AS concept),
     -- Östermalm / Södermalm (case-insensitive; Scandinavian ø supported).
     STRUCT('östermalm' AS pattern, 'Östermalm' AS concept),
-    STRUCT('östermalm' AS pattern, 'Östermalm' AS concept),
     STRUCT('södermalm' AS pattern, 'Södermalm' AS concept),
     -- Cluster patterns (mostly ad-set level inside funnel campaigns).
     STRUCT('stockholm city' AS pattern, 'Stockholm City' AS concept),
@@ -157,7 +156,6 @@ cluster_overrides AS (
   SELECT cluster, child FROM UNNEST([
     STRUCT('Stockholm City' AS cluster, 'Östermalm' AS child),
     STRUCT('Stockholm City' AS cluster, 'Södermalm' AS child),
-    STRUCT('Stockholm City' AS cluster, 'Stockholm Waterfront' AS child),
     STRUCT('Stockholm City' AS cluster, 'Stockholm Waterfront' AS child),
     STRUCT('Stockholm City' AS cluster, 'Stockholm North' AS child),
     STRUCT('Stockholm City' AS cluster, 'Stockholm Waterside' AS child),

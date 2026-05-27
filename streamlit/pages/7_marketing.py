@@ -1749,9 +1749,9 @@ else:
                     _available_locs = get_available_locations(
                         st.session_state.df1, _loc_col,
                     )
-                    _cpa_loc_options = ["Alle locaties"] + _available_locs
+                    _cpa_loc_options = ["All locations"] + _available_locs
                     selected_cpa_location = st.selectbox(
-                        "Locatie",
+                        "Location",
                         options=_cpa_loc_options,
                         index=0,
                         key="cpa_location_select",
@@ -1764,7 +1764,7 @@ else:
                     # `_BQ_TO_STREAMLIT_LOCATION` is one-to-many, so a naive
                     # inversion would point at the wrong canonical key.
                     cpa_df1 = st.session_state.df1
-                    if selected_cpa_location != "Alle locaties" and _loc_col:
+                    if selected_cpa_location != "All locations" and _loc_col:
                         cpa_df1 = cpa_df1[
                             cpa_df1[_loc_col] == selected_cpa_location
                         ]
@@ -1882,7 +1882,7 @@ else:
                             # with the Alle locaties path (which has
                             # always excluded SEE/THINK) and with the
                             # ROI tab (also DO-only after this PR).
-                            # "Alle locaties": stays on the legacy
+                            # "All locations": stays on the legacy
                             # combined_df path with SEE/THINK excluded
                             # — the view only contains mapped rows,
                             # so summing across all locations would
@@ -1890,7 +1890,7 @@ else:
                             # funnel spend (Decision 1).
                             actual_cpa = None
                             cpa_load_error = None
-                            if selected_cpa_location != "Alle locaties":
+                            if selected_cpa_location != "All locations":
                                 cpa_location_df = st.session_state.get(
                                     "location_performance_do_df",
                                 )
@@ -1977,7 +1977,7 @@ else:
                                     "Per-location actual CPA from concept-based"
                                     " weighted allocation. Includes all STDC"
                                     " phases (SEE, THINK, DO, CARE)."
-                                    if selected_cpa_location != "Alle locaties"
+                                    if selected_cpa_location != "All locations"
                                     else (
                                         "Overall actual CPA across all platforms,"
                                         " excluding SEE & THINK awareness"
@@ -2000,7 +2000,7 @@ else:
                                         f" from BigQuery: {cpa_load_error}."
                                         " Try reloading."
                                     )
-                                elif selected_cpa_location != "Alle locaties":
+                                elif selected_cpa_location != "All locations":
                                     _na_help = (
                                         "No weighted-allocated spend for this"
                                         " location in the selected date range."
@@ -2014,7 +2014,7 @@ else:
                                 )
                             if (
                                 actual_cpa is not None
-                                and selected_cpa_location != "Alle locaties"
+                                and selected_cpa_location != "All locations"
                             ):
                                 st.caption(
                                     "DO-phase campaigns only (SEE / THINK"
@@ -2030,7 +2030,7 @@ else:
                             _clv_ret_eff = _clv_monthly_ret
                             _clv_source = "global"
 
-                            if selected_cpa_location != "Alle locaties":
+                            if selected_cpa_location != "All locations":
                                 _end = st.session_state.get("bookeo_loaded_end_date")
                                 if _end:
                                     _end_str = _end.strftime("%Y-%m-%d") if hasattr(_end, "strftime") else str(_end)
@@ -2310,7 +2310,7 @@ else:
                         )
                         _configured_locs = [
                             loc for loc in _stored
-                            if loc != "Alle locaties"
+                            if loc != "All locations"
                         ]
                         if _configured_locs:
                             with st.expander(
@@ -2347,7 +2347,7 @@ else:
                                         _loc_wm,
                                     )
                                     _comp_rows.append({
-                                        "Locatie": _loc_name.replace(
+                                        "Location": _loc_name.replace(
                                             "Northern Sauna ", "",
                                         ),
                                         "AOV": f"€{_loc_m['aov']:.2f}",

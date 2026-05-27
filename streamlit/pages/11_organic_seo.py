@@ -375,13 +375,13 @@ with tab_search:
         with st.expander(f"Key Takeaways ({_sc_date_from} \u2013 {_sc_date_to})"):
             top_query = sc_df.groupby("query")["clicks"].sum().idxmax() if total_clicks > 0 else "N/A"
             top_clicks = int(sc_df.groupby("query")["clicks"].sum().max()) if total_clicks > 0 else 0
-            is_branded = top_query and "northern_sauna" in str(top_query).lower()
+            is_branded = top_query and "northern sauna" in str(top_query).lower()
 
             st.info(
                 f"**{format_number(total_impressions)}** search impressions with a **{avg_ctr:.1f}%** CTR "
                 f"and average position **{weighted_pos:.1f}**. "
                 f"Top query: **{top_query}** ({format_number(top_clicks)} clicks). "
-                + ("Strong brand visibility — most top queries contain 'northern_sauna'."
+                + ("Strong brand visibility — most top queries contain 'northern sauna'."
                    if is_branded else
                    "Opportunity to improve branded search presence.")
             )
@@ -813,7 +813,7 @@ with tab_paid_organic:
         if sc_df_tab3 is not None and not sc_df_tab3.empty:
             brand_q = sc_df_tab3[
                 sc_df_tab3["query"].str.contains(
-                    "northern_sauna", case=False, na=False,
+                    "northern sauna", case=False, na=False,
                 )
             ]
             total_q_clicks = sc_df_tab3["clicks"].sum()
@@ -896,7 +896,7 @@ with tab_paid_organic:
                 "Brand Query %",
                 f"{brand_pct:.1f}%"
                 if brand_pct is not None else "N/A",
-                help="% of clicks on queries containing 'northern_sauna'",
+                help="% of clicks on queries containing 'northern sauna'",
             )
             st.metric(
                 "Returning Users",
