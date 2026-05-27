@@ -12,7 +12,7 @@
 -- by filtering on the DO regex alone.
 --
 -- The four cluster Meta campaigns (`Think | Clicks | ABO`,
--- `Clicks | Alle locaties`, etc.) do NOT match any DO keyword and are
+-- `Clicks | All locations`, etc.) do NOT match any DO keyword and are
 -- excluded — that's the point. CPA / ROAS computed off this view
 -- reflect conversion-stage spend only, which the rest of the
 -- marketing-team UX assumes when it says "CPA".

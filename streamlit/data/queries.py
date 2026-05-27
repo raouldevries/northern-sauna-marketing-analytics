@@ -417,7 +417,7 @@ def load_location_performance_do_from_bq(
     STDC=DO source campaigns/ad-sets. Used by the CPA tab and the ROI
     tab's CPA + ROAS columns so those metrics measure conversion-stage
     spend only — Meta's `Think | Clicks | ABO` and `Clicks | Alle
-    locaties` (high spend, near-zero attributed conversions) don't
+    locations` (high spend, near-zero attributed conversions) don't
     inflate the CPA figure.
 
     All-phase metrics elsewhere on the page (Overview, Campaigns tab)

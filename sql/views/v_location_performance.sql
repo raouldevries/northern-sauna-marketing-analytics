@@ -68,7 +68,7 @@ meta_concept_map AS (
     STRUCT('helsinki kamppi' AS pattern, 'Helsinki Kamppi' AS concept),
     STRUCT('oslo frogner' AS pattern, 'Oslo Frogner' AS concept),
     STRUCT('oslo grünerløkka' AS pattern, 'Oslo Grünerløkka' AS concept),
-    -- Bare 'grünerløkka' for ad-sets like "Oslo city - Grünerløkka - Doelgroep breed".
+    -- Bare 'grünerløkka' for ad-sets like "Oslo city - Grünerløkka - Audience broad".
     STRUCT('grünerløkka' AS pattern, 'Oslo Grünerløkka' AS concept),
     STRUCT('seaside-1' AS pattern, 'Seaside 1' AS concept),
     STRUCT('seaside-2' AS pattern, 'Seaside 2' AS concept),
@@ -269,11 +269,11 @@ google_ads AS (
 --      concepts only — ignore ad-set concepts. Prevents stale or
 --      copy-pasted ad-set names inside an explicit single-location
 --      campaign (e.g. `Clicks | Helsinki Kamppi` with an ad-set
---      named "Campagne Openingsactie 2025 - Helsinki Kallio")
+--      named "Campaign Launch 2025 - Helsinki Kallio")
 --      from creating false multi-concept splits.
 --   2. Otherwise (campaign_name is generic / unmapped, e.g.
 --      `Think | Clicks | ABO`, `Do | Conversions | ABO`,
---      `Clicks | Alle locaties`), fall back to ad-set-level
+--      `Clicks | All locations`), fall back to ad-set-level
 --      detection so funnel city/helsinki cluster targeting still
 --      works.
 -- Each name is matched in isolation (haystack wrapped with

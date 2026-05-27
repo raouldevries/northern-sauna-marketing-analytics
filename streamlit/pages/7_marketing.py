@@ -1641,7 +1641,7 @@ else:
                                 "Every metric on this table reflects"
                                 " conversion-stage campaigns only — Meta's"
                                 " `Think | Clicks | ABO`, `Clicks | Alle"
-                                " locaties`, and other upper-funnel"
+                                " locations`, and other upper-funnel"
                                 " SEE / THINK spend is excluded from the"
                                 " entire ROI universe (Clicks, Conversions,"
                                 " Conv. Value, Ad Spend, CPA, ROAS). To"
@@ -1665,7 +1665,7 @@ else:
                                 " awareness / Demand Gen, etc.).\n"
                                 "- DO-phase funnel ad-sets without a"
                                 " city/helsinki cluster name (retargeting,"
-                                " lookalikes, 'Clicks | Alle locaties').\n\n"
+                                " lookalikes, 'Clicks | All locations').\n\n"
                                 "**Metrics:**\n"
                                 "- **Conv. Rate %** = Conversions / Clicks"
                                 " x 100\n"
@@ -1803,7 +1803,7 @@ else:
                             col3, col4 = st.columns([1, 1])
                             with col3:
                                 bedrijfskosten = st.number_input(
-                                    "Bedrijfskosten %",
+                                    "Operating costs %",
                                     min_value=0,
                                     max_value=100,
                                     value=_def_bk,
@@ -1817,7 +1817,7 @@ else:
                                 )
                             with col4:
                                 winstmarge = st.number_input(
-                                    "Winstmarge %",
+                                    "Profit margin %",
                                     min_value=0,
                                     max_value=100 - bedrijfskosten,
                                     value=min(_def_wm, 100 - bedrijfskosten),
@@ -1825,7 +1825,7 @@ else:
                                     key=f"cpa_winstmarge_{selected_cpa_location}",
                                     help=(
                                         "Target profit as % of turnover."
-                                        " Bedrijfskosten + Winstmarge"
+                                        " Operating costs + Profit margin"
                                         " must be ≤ 100%. The remainder"
                                         " is your ad budget per booking."
                                     )
@@ -1843,7 +1843,7 @@ else:
                             _, _, cost_label_col = st.columns([1, 1, 2])
                             with cost_label_col:
                                 st.caption(
-                                    f"{bedrijfskosten}% costs · {winstmarge}% profit"
+                                    f"{bedrijfskosten}% operating costs · {winstmarge}% profit margin"
                                     f" · **{ad_budget_pct}% ads** = 100%"
                                 )
 
@@ -1879,7 +1879,7 @@ else:
                             # `Think | Clicks | ABO` etc.) are
                             # excluded from both numerator and
                             # denominator. Keeps this tab consistent
-                            # with the Alle locaties path (which has
+                            # with the All locations path (which has
                             # always excluded SEE/THINK) and with the
                             # ROI tab (also DO-only after this PR).
                             # "All locations": stays on the legacy
@@ -1952,7 +1952,7 @@ else:
                                 f"€{cpa_targets['breakeven_cpa']:.2f}",
                                 help=(
                                     "Maximum CPA to avoid loss"
-                                    " = AOV x (1 - Bedrijfskosten%)"
+                                    " = AOV x (1 - Operating costs%)"
                                     f" = €{cpa_metrics['aov']:.2f}"
                                     f" x {(100-bedrijfskosten)/100:.2f}"
                                 )
@@ -1963,8 +1963,8 @@ else:
                                 f"€{cpa_targets['target_cpa']:.2f}",
                                 help=(
                                     "CPA to achieve target profit"
-                                    " = AOV x (1 - Bedrijfskosten%"
-                                    " - Winstmarge%)"
+                                    " = AOV x (1 - Operating costs%"
+                                    " - Profit margin%)"
                                     f" = €{cpa_metrics['aov']:.2f}"
                                     f" x {max(0, 100-bedrijfskosten-winstmarge)/100:.2f}"
                                 )
@@ -2109,7 +2109,7 @@ else:
                                     f"€{breakeven_cpa_clv:.2f}",
                                     help=(
                                         f"Maximum CPA based on {horizon_label} CLV"
-                                        " = CLV × (1 - Bedrijfskosten%)"
+                                        " = CLV × (1 - Operating costs%)"
                                         f" = €{clv_val:.2f}"
                                         f" × {bk_frac_val:.2f}"
                                     )
@@ -2120,7 +2120,7 @@ else:
                                     f"€{target_cpa_clv:.2f}",
                                     help=(
                                         f"Target CPA based on {horizon_label} CLV"
-                                        " = Break-even (CLV) × (1 - Winstmarge%)"
+                                        " = Break-even (CLV) × (1 - Profit margin%)"
                                         f" = €{breakeven_cpa_clv:.2f}"
                                         f" × {wm_frac_val:.2f}"
                                     )
@@ -2152,7 +2152,7 @@ else:
                                     "Formula": "Total Turnover / Total Bookings",
                                 },
                                 {
-                                    "Metric": "Bedrijfskosten %",
+                                    "Metric": "Operating costs %",
                                     "Value": f"{bedrijfskosten}%",
                                     "Source": "User input",
                                     "Formula": "-",
@@ -2162,13 +2162,13 @@ else:
                                     "Value": f"€{be_cpa:.2f}",
                                     "Source": "Calculated",
                                     "Formula": (
-                                        f"AOV x (1 - {bedrijfskosten}%)"
+                                        f"AOV x (1 - {bedrijfskosten}% operating costs)"
                                         f" = €{aov_val:.2f}"
                                         f" x {bk_frac:.2f}"
                                     ),
                                 },
                                 {
-                                    "Metric": "Winstmarge %",
+                                    "Metric": "Profit margin %",
                                     "Value": f"{winstmarge}%",
                                     "Source": "User input",
                                     "Formula": "-",
@@ -2178,7 +2178,7 @@ else:
                                     "Value": f"€{t_cpa:.2f}",
                                     "Source": "Calculated",
                                     "Formula": (
-                                        f"AOV x (1 - {bedrijfskosten}%"
+                                        f"AOV x (1 - {bedrijfskosten}% operating costs"
                                         f" - {winstmarge}%)"
                                         f" = €{aov_val:.2f}"
                                         f" x {max(0, 100-bedrijfskosten-winstmarge)/100:.2f}"
@@ -2229,7 +2229,7 @@ else:
                                         "Value": f"€{_be_clv:.2f}",
                                         "Source": "Calculated",
                                         "Formula": (
-                                            f"CLV × (1 - {bedrijfskosten}%)"
+                                            f"CLV × (1 - {bedrijfskosten}% operating costs)"
                                             f" = €{clv_val:.2f}"
                                             f" × {_bk:.2f}"
                                         ),
@@ -2239,7 +2239,7 @@ else:
                                         "Value": f"€{_t_clv:.2f}",
                                         "Source": "Calculated",
                                         "Formula": (
-                                            f"Break-even (CLV) × (1 - {winstmarge}%)"
+                                            f"Break-even (CLV) × (1 - {winstmarge}% profit margin)"
                                             f" = €{_be_clv:.2f}"
                                             f" × {_wm:.2f}"
                                         ),
@@ -2382,14 +2382,14 @@ else:
                                         f"€{_over:.2f} above target (€{_tgt:.2f}).** "
                                         "Review campaign targeting, reduce "
                                         "spend on underperforming campaigns, "
-                                        "or increase bedrijfskosten efficiency."
+                                        "or improve operating-cost efficiency."
                                     )
                             st.info(
                                 f"**Your ad budget is {ad_budget_pct}% of turnover "
                                 f"(€{cpa_metrics['aov'] * ad_budget_pct / 100:.2f} "
                                 f"per booking).** "
-                                f"With {bedrijfskosten}% costs and "
-                                f"{winstmarge}% margin, every booking "
+                                f"With {bedrijfskosten}% operating costs and "
+                                f"{winstmarge}% profit margin, every booking "
                                 f"above €{_tgt:.2f} CPA eats into profit."
                             )
 
