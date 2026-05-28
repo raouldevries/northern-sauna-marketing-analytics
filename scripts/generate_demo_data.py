@@ -340,10 +340,9 @@ def _build_bookings(
                 net = round(gross / (1 + VAT_RATE), 2)
 
                 # Visit time: 08:00–22:00 with a realistic evening peak. After-
-                # work hours (17-20) are when wellness customers actually book;
-                # morning slots are sparse but non-empty (early-bird and
-                # weekend brunch saunas). 15 hours × 7 weekdays makes the
-                # heatmap a proper time-of-day signal instead of a flat band.
+                # work hours (17-20) are when wellness customers actually book
+                # the slot; morning slots are sparse but non-empty (early-bird
+                # and weekend brunch saunas).
                 visit_hour = int(rng.choice(
                     list(range(8, 23)),
                     p=[
@@ -359,9 +358,34 @@ def _build_bookings(
                 )
                 end_dt = visit_dt + timedelta(minutes=product_duration_min)
 
-                # Booking creation: 0-60 days before visit, weighted to recent.
+                # Booking creation: 0-60 days before visit, with an independent
+                # hour drawn from the full 24h weighted distribution below. This
+                # is when the customer was on the booking site — distinct from
+                # the visit_hour they booked FOR. Late-night and early-morning
+                # browsing are real (phone-in-bed sessions), the 12:00 lunch
+                # spike + 20:00 after-dinner peak are the heaviest bands.
                 lead_days = int(rng.integers(0, 61))
-                created_dt = visit_dt - timedelta(days=lead_days)
+                # 24-hour weight curve, normalized at module load.
+                _CREATION_HOUR_WEIGHTS = (
+                    2, 2, 1, 1, 1, 1,    # 00-05  late night → sleep
+                    1, 2, 4, 5, 5, 6,    # 06-11  morning ramp
+                    7, 6, 5, 5, 5, 5,    # 12-17  lunch spike + afternoon
+                    6, 8, 9, 8, 5, 3,    # 18-23  evening peak at 20:00
+                )
+                _total_w = sum(_CREATION_HOUR_WEIGHTS)
+                _creation_probs = [w / _total_w for w in _CREATION_HOUR_WEIGHTS]
+                created_hour = int(rng.choice(list(range(24)), p=_creation_probs))
+                created_minute = int(rng.integers(0, 60))
+                visit_date_only = visit_dt.date()
+                created_date = visit_date_only - timedelta(days=lead_days)
+                created_dt = datetime.combine(
+                    created_date,
+                    time(hour=created_hour, minute=created_minute),
+                )
+                # Same-day bookings created after the visit hour aren't physically
+                # possible — clamp to a believable 1-3 hours before the visit.
+                if created_dt >= visit_dt:
+                    created_dt = visit_dt - timedelta(hours=int(rng.integers(1, 4)))
 
                 status = _draw_status(rng)
                 is_canceled = status == "canceled"
