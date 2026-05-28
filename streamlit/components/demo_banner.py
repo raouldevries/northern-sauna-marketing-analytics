@@ -92,10 +92,10 @@ def render_footer() -> None:
         </style>
         <div class="ns-demo-footer">
             Public portfolio demo &middot;
-            <a href="https://github.com/raouldevries/ns-marketing-analytics"
+            <a href="https://github.com/raouldevries/northern-sauna-marketing-analytics"
                target="_blank" rel="noopener">source</a>
             &middot;
-            <a href="https://github.com/raouldevries/ns-marketing-analytics#whats-not-in-the-public-demo"
+            <a href="https://github.com/raouldevries/northern-sauna-marketing-analytics#whats-not-in-the-public-demo"
                target="_blank" rel="noopener">about this demo</a>
         </div>
         """,
