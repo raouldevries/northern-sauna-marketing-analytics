@@ -6,7 +6,11 @@ A Streamlit dashboard that consolidates bookings, paid media, organic search, an
 
 **Live demo:** [northern-sauna-marketing-analytics.streamlit.app](https://northern-sauna-marketing-analytics.streamlit.app/) (no password — `DEMO_MODE=true` short-circuits the auth gate).
 
-![Marketing page — cross-channel KPIs](docs/screenshots/marketing-overview.png)
+<video src="https://github.com/raouldevries/northern-sauna-marketing-analytics/raw/main/docs/walkthrough.webm" poster="docs/screenshots/marketing-overview.png" controls width="100%">
+  <a href="https://github.com/raouldevries/northern-sauna-marketing-analytics/raw/main/docs/walkthrough.webm">Download the walkthrough video</a>
+</video>
+
+> 1:48 silent tour of all ten pages, recorded with a Playwright script (`scripts/walkthrough/record.mjs`). The dashboard you see is the live deployed demo, not a mockup.
 
 ## How this was built
 
