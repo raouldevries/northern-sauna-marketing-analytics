@@ -23,7 +23,8 @@ The build leans on a small, sharp set of Claude Code workflows + external integr
 
 | | What | Where it shows up |
 |---|---|---|
-| Skill | **`/plan-loop`** | Converged the multi-phase implementation plan against the codebase across 4 iterations before any code landed. The full plan lives in the private repo; the per-phase outcomes are in [`docs/progress.md`](docs/progress.md). |
+| Skill | **`/make-plan`** | Authored the initial multi-phase implementation plan (phases + steps + acceptance criteria + quality gates + progress tracking) — the structured spec that `/plan-loop` then converged and `/audit-loop` later executed step-by-step. Same skill used inside the project for smaller follow-up plans (feature additions, bug-fix campaigns). |
+| Skill | **`/plan-loop`** | Converged the plan from `/make-plan` against the codebase across 4 iterations before any code landed. The full plan lives in the private repo; the per-phase outcomes are in [`docs/progress.md`](docs/progress.md). |
 | Skill | **`/audit-loop`** | Ran every plan step through test/gate → validate → self-audit subagent → Codex external review → triage → commit, under a stop-hook. 10 cycles end-to-end. |
 | Skill | **`/handover`** | Produced 6 handover docs in [`docs/handovers/`](docs/handovers/) (private repo) so the multi-day build survived between sessions. |
 | Tool | **Codex CLI** (`codex exec --sandbox read-only`) | Independent external reviewer inside every audit-loop cycle. Read-only sandbox mode means it can grep / `git diff` but can't write — its findings come back as a triage list, not a patch. |
