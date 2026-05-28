@@ -339,8 +339,20 @@ def _build_bookings(
                 gross = round(participants * UNIT_PRICE_EUR, 2)
                 net = round(gross / (1 + VAT_RATE), 2)
 
-                # Visit time: random hour between 10:00 and 21:00 on the day.
-                visit_hour = int(rng.integers(10, 21))
+                # Visit time: 08:00–22:00 with a realistic evening peak. After-
+                # work hours (17-20) are when wellness customers actually book;
+                # morning slots are sparse but non-empty (early-bird and
+                # weekend brunch saunas). 15 hours × 7 weekdays makes the
+                # heatmap a proper time-of-day signal instead of a flat band.
+                visit_hour = int(rng.choice(
+                    list(range(8, 23)),
+                    p=[
+                        0.02, 0.03, 0.04, 0.05, 0.05, 0.05,  # 08-13
+                        0.06, 0.07, 0.08,                     # 14-16
+                        0.12, 0.13, 0.12,                     # 17-19 (peak)
+                        0.09, 0.06, 0.03,                     # 20-22
+                    ],
+                ))
                 visit_minute = int(rng.choice([0, 15, 30, 45]))
                 visit_dt = datetime.combine(
                     day, time(hour=visit_hour, minute=visit_minute)
