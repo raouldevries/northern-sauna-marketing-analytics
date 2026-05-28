@@ -8,7 +8,7 @@ A Streamlit dashboard that consolidates bookings, paid media, organic search, an
 
 ![Marketing page — cross-channel KPIs](docs/screenshots/marketing-overview.png)
 
-> [**Watch the 1:48 walkthrough**](docs/walkthrough.webm): a silent tour of all ten pages, recorded with `scripts/walkthrough/record.mjs`. The dashboard you see is the live deployed demo, not a mockup.
+> [**Watch the 1:48 walkthrough**](https://github.com/raouldevries/northern-sauna-marketing-analytics/raw/main/docs/walkthrough.webm) (webm, 10 MB): a silent tour of all ten pages, recorded with `scripts/walkthrough/record.mjs`. The dashboard you see is the live deployed demo, not a mockup.
 
 ## How this was built
 
