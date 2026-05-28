@@ -69,6 +69,17 @@ The dashboard isn't just charts on top of a warehouse. The underlying modeling, 
 
 Most "marketing analytics portfolio" projects stop at impressions and clicks. The CLV ROAS and 2Y CLV Value KPIs in the screenshot above are computed against the modeling layer.
 
+## AI features (live build only)
+
+The dashboard ships with two LLM-powered tools that don't run in the public demo. The "Northern Sauna AI" page renders a text-only stub explaining each — the description below is what's in the live build.
+
+- **Natural-language SQL** — a chat surface that turns plain-English business questions ("how did Saturday compare to last week?", "which locations underperformed in April?", "which discount codes drove the most repeat bookings?") into safe, partition-filtered BigQuery and returns a chart, KPI, or table. Provider is Claude via the Anthropic API. Tool-use loop with deterministic schema injection (no embeddings — the catalog is small enough to hand the model the whole thing).
+- **Copy Bot** — drafts on-brand ad copy from a curated knowledge base of past creative + tone-of-voice rules + offer mechanics. Same provider; different system prompt and a separate scoring pass that rates output against brand guidelines before showing it to the user.
+- **Catalog-driven SQL safety validator** — every generated query, before it touches BigQuery, runs through a validator that: (1) whitelists tables against `schema_catalog.yaml`, (2) enforces date partition filters on any table tagged with a `partition_column`, (3) caps `maximum_bytes_billed` so a runaway scan can't ruin anyone's day, (4) parses the SQL with `sqlglot` so blocked operations are caught before they leave the agent. The catalog is the single source of truth for what the model is allowed to see.
+- **Schema drift detection** — a daily audit job compares the catalog against the live BigQuery schema. Drift / clean / error exit codes wired into the runbook; alerts on drift so the safety validator can never silently outgrow its source of truth.
+
+Why this isn't in the demo: the agent needs an Anthropic API key configured against the real warehouse schema. Shipping a key would be unsafe; shipping a mock that drifts from how the real thing behaves would be misleading. The page-12 stub explains the same to anyone clicking through the demo.
+
 ## Production-engineering details worth a peek
 
 - **Live-build/demo path parity.** One shared helper (`_load_fixture` in `streamlit/data/queries.py`) does CSV read + Timestamp coercion + inclusive date filter so the demo path matches BigQuery's `to_dataframe()` dtype contract. Pages that call `.strftime()` or `.dt.date` on a date column work identically on both paths.
