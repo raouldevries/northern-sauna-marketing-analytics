@@ -52,7 +52,22 @@ PRODUCT_CATALOG = [
 ]
 
 PROMOTION_NAMES = ["Spring offer", "Member discount"]
-BOOKING_SOURCES = ["website", "google", "referral"]
+# Realistic source mix for a wellness / pop-up sauna business: paid + social
+# discovery dominate top-of-funnel, repeat customers come back via direct +
+# newsletter, gift-card redemptions and word-of-mouth round out the long tail.
+# Weights sum to 1.0 — bookings still get a small `None` slice below for the
+# genuinely-untracked sessions (matches what most real booking systems see).
+BOOKING_SOURCES = [
+    "direct",
+    "google",
+    "instagram",
+    "facebook",
+    "referral",
+    "newsletter",
+    "gift_card",
+    "affiliate",
+]
+BOOKING_SOURCE_WEIGHTS = [0.22, 0.26, 0.16, 0.09, 0.11, 0.06, 0.06, 0.04]
 
 # Raw location strings (pre-mapping). These match the keys in
 # streamlit/data/bq_client.py::_BQ_TO_STREAMLIT_LOCATION on the demo side.
@@ -343,9 +358,12 @@ def _build_bookings(
                     if rng.random() < 0.20
                     else None
                 )
+                # ~8% have no source recorded (genuinely untracked / sessions
+                # that lost the referrer). The rest are weighted across the
+                # realistic source mix above.
                 source = (
-                    BOOKING_SOURCES[int(rng.integers(0, len(BOOKING_SOURCES)))]
-                    if rng.random() < 0.30
+                    str(rng.choice(BOOKING_SOURCES, p=BOOKING_SOURCE_WEIGHTS))
+                    if rng.random() < 0.92
                     else None
                 )
 
