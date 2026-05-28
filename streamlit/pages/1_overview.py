@@ -385,6 +385,39 @@ if BQ_AVAILABLE:
 
         st.rerun()
 
+# Demo-mode equivalent: no background thread, no preload cache — the
+# fixture reads are fast enough to do synchronously inside the spinner.
+# Loads bookings + marketing + GA4 + Search Console so the Data Status
+# cards on this page populate from first paint instead of staying "—"
+# until the user clicks into Marketing / Organic.
+elif DEMO_MODE and (
+    not st.session_state.get('bookeo_loaded')
+    or st.session_state.get('google_ads_df') is None
+):
+    with kpi_area, st.spinner("Loading demo data..."):
+        if 'bookeo_start_date' not in st.session_state:
+            st.session_state.bookeo_start_date = datetime(2025, 9, 1)
+            st.session_state.bookeo_end_date = datetime.now() - timedelta(days=1)
+        if not st.session_state.get('bookeo_loaded'):
+            df1, df2, _errs = load_bookeo_data(
+                start_date=st.session_state.bookeo_start_date,
+                end_date=st.session_state.bookeo_end_date,
+                include_canceled=True,
+                progress_callback=None,
+            )
+            st.session_state.df1 = df1
+            st.session_state.df2 = df2
+            st.session_state.bookeo_loaded = True
+            st.session_state.bookeo_loaded_start_date = st.session_state.bookeo_start_date
+            st.session_state.bookeo_loaded_end_date = st.session_state.bookeo_end_date
+            st.session_state.bookeo_loaded_include_canceled = True
+            st.session_state.bookeo_last_refresh = datetime.now()
+            st.session_state.drive_loaded = True
+            st.session_state.data_source = 'demo'
+        if st.session_state.get('google_ads_df') is None:
+            _load_marketing_data()
+    st.rerun()
+
 # ---------------------------------------------------------------------------
 # Feedback overview — all comments across pages
 # ---------------------------------------------------------------------------

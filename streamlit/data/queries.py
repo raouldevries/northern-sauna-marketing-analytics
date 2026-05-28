@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -1124,26 +1125,23 @@ def load_daily_marketing_summary_from_bq(
 
 
 def _demo_freshness() -> dict:
-    """Derive freshness from fixture date ranges — evergreen across re-generations."""
-    bookings = _load_fixture("bookings")
-    campaigns = _load_fixture("campaign_performance")
-    ga4 = _load_fixture("ga4_traffic")
-    sc = _load_fixture("search_console_queries")
+    """Return "yesterday" for every source in demo mode.
 
-    def _max(series) -> str | None:
-        if series.empty:
-            return None
-        return str(pd.to_datetime(series, errors="coerce").max().date())
-
-    google = campaigns[campaigns["platform"].str.lower() == "google"]["date"]
-    meta = campaigns[campaigns["platform"].str.lower() == "meta"]["date"]
+    Earlier this function returned the actual MAX(date) per fixture, but
+    fixtures have a fixed end date so the freshness badges on the Data
+    Status table kept drifting ("3d ago", "1w ago", …) as days passed
+    without a re-generation. For a portfolio demo the right signal is
+    "the sync is healthy", which is what a live build with a daily cron
+    would show — so we pin every source to yesterday.
+    """
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     return {
-        "bookings_created": _max(bookings["booking_created_at"]),
-        "bookings_visit": _max(bookings["visit_datetime"]),
-        "ga4": _max(ga4["date"]),
-        "search_console": _max(sc["data_date"]),
-        "google_ads": _max(google),
-        "meta_ads": _max(meta),
+        "bookings_created": yesterday,
+        "bookings_visit": yesterday,
+        "ga4": yesterday,
+        "search_console": yesterday,
+        "google_ads": yesterday,
+        "meta_ads": yesterday,
     }
 
 
