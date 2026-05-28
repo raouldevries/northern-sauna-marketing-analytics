@@ -17,7 +17,21 @@ This codebase is also a portfolio of an agentic engineering practice. Most of th
 - **A pre-commit identifier gate** (`scripts/validate_identifiers.sh`) blocks any commit that would leak real-world identifiers (GCP project ID, GA4 property ID, owner email, internal dataset names, Dutch UI strings from the live build) into a public push. Run continuously throughout the project; caught the regressions you don't catch by eye.
 - **A Chrome-driven deployed-app audit** (cycle #10) clicked through every page on the live URL and caught three Dutch UI labels that AppTest smoke + identifier scrub had both missed.
 
-If you're evaluating this as a work sample, [`docs/progress.md`](docs/progress.md) is the most differentiated artifact in the repo.
+### Skills, plugins, and tools used
+
+The build leans on a small, sharp set of Claude Code workflows + external integrations rather than a long list. Everything below was used at least once during the project; the cycle-by-cycle log in [`docs/progress.md`](docs/progress.md) shows exactly where.
+
+| | What | Where it shows up |
+|---|---|---|
+| Skill | **`/plan-loop`** | Converged `plans/public-demo-showcase-kuuma-marketing-analytics-plan.md` against the codebase across 4 iterations before any code landed. |
+| Skill | **`/audit-loop`** | Ran every plan step through test/gate → validate → self-audit subagent → Codex external review → triage → commit, under a stop-hook. 10 cycles end-to-end. |
+| Skill | **`/handover`** | Produced 6 handover docs in [`docs/handovers/`](docs/handovers/) (private repo) so the multi-day build survived between sessions. |
+| Tool | **Codex CLI** (`codex exec --sandbox read-only`) | Independent external reviewer inside every audit-loop cycle. Read-only sandbox mode means it can grep / `git diff` but can't write — its findings come back as a triage list, not a patch. |
+| Subagent | **General-purpose self-audit subagent** | The internal reviewer that runs before Codex on each cycle. Isolated from the main context so the review is genuinely independent — catches things you've stopped seeing because you wrote them. |
+| Plugin | **`claude-in-chrome` MCP** | Drove the deployed-app audit (cycle #10). Clicked through every page on the live Streamlit Cloud URL, queried the DOM, and caught three Dutch UI labels surviving on the Marketing → CPA Targets tab that AppTest smoke + the identifier gate had both missed. |
+| Custom | **Identifier gate** (`scripts/validate_identifiers.sh`) | ~30 banned tokens covering brand, real venue names, Dutch UI strings, GCP project ID, GA4 property ID, owner email. Exits non-zero on any hit. Local-only — not a GitHub Action — but invoked at the top of every audit-loop cycle. |
+
+If you're evaluating this as a work sample, [`docs/progress.md`](docs/progress.md) is the most differentiated artifact in the repo — it shows what each cycle's audit subagent found, what Codex flagged independently, how each finding was triaged (FIX / DOCUMENT / DISMISS), and what landed in the commit.
 
 ## Architecture
 
