@@ -109,7 +109,7 @@ Open `http://localhost:8501`. The auth gate auto-bypasses in demo mode.
 
 `scripts/generate_demo_data.py` is a single deterministic generator (seeded `Faker(42)` + `numpy.random.default_rng(42)`) that emits 15 CSVs covering ~14 months of bookings, ad spend, organic traffic, and search queries. Two consecutive runs produce byte-identical output, verified by hashing all 15 CSVs into a single sha-of-shas. Every fixture passes inline assertions on row counts, ratios, and cross-fixture attribution (e.g., total ad conversions never exceed total non-canceled bookings). Full schema in [`docs/fixtures.md`](docs/fixtures.md).
 
-Venue names that appear in mapping tables and SQL views ("Northern Sauna Stockholm Östermalm", "Helsinki Kamppi", "Oslo Grünerløkka") are the *shape* of the live build's location-normalization logic. The demo CSVs use a smaller neutral set ("Northern Sauna Stockholm / Helsinki / Oslo") so nothing in the data corresponds to a real venue.
+Venue names that appear in mapping tables and SQL views ("Northern Sauna Stockholm Östermalm", "Helsinki Kamppi", "Oslo Grünerløkka") are the *shape* of the live build's location-normalization logic. The demo CSVs use a flat city-level set — Northern Sauna Stockholm / Helsinki / Oslo / Copenhagen / Gothenburg / Bergen — so nothing in the data corresponds to a real venue.
 
 ## Repo layout
 

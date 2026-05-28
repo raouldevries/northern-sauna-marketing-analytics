@@ -41,9 +41,15 @@ st.markdown(hide_default_nav, unsafe_allow_html=True)
 # daily_capacity = drop_in_max × slots_per_day
 # ---------------------------------------------------------------------------
 LOCATION_CAPACITY = {
-    "Northern Sauna Stockholm": {"drop_in_max": 6, "slots_per_day": 10},
+    # Six demo locations across Nordic capitals + regional cities.
+    "Northern Sauna Stockholm": {"drop_in_max": 8, "slots_per_day": 12},
     "Northern Sauna Helsinki": {"drop_in_max": 7, "slots_per_day": 11},
-    "Northern Sauna Oslo": {"drop_in_max": 6, "slots_per_day": 12},
+    "Northern Sauna Oslo": {"drop_in_max": 7, "slots_per_day": 11},
+    "Northern Sauna Copenhagen": {"drop_in_max": 6, "slots_per_day": 10},
+    "Northern Sauna Gothenburg": {"drop_in_max": 6, "slots_per_day": 10},
+    "Northern Sauna Bergen": {"drop_in_max": 5, "slots_per_day": 9},
+    # Live-build city-neighborhood entries kept as documentation of how the
+    # location-normalization view splits multi-venue cities.
     "Northern Sauna Stockholm Östermalm": {"drop_in_max": 6, "slots_per_day": 11},
     "Northern Sauna Stockholm Södermalm": {"drop_in_max": 8, "slots_per_day": 12},
     "Northern Sauna Stockholm Waterfront": {"drop_in_max": 6, "slots_per_day": 10},

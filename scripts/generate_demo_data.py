@@ -37,7 +37,18 @@ VAT_RATE = 0.21
 # Average bookings per location per weekday. Weekend (Sat/Sun) gets a 20%
 # lift. Tuned so the 12-month bookings.csv lands in the 3,000-8,000 range
 # specified by the plan.
-BASELINE_PER_DAY = {"stockholm": 5, "helsinki": 5, "oslo": 6}
+# Six locations across Sweden, Norway, Finland, Denmark — reads like a real
+# expanding Nordic chain. Baselines vary so the "Turnover by Location" chart
+# tells a story: Stockholm (flagship) > capitals (Helsinki / Oslo / Copenhagen)
+# > regional sites (Gothenburg / Bergen).
+BASELINE_PER_DAY = {
+    "stockholm": 4,
+    "helsinki": 3,
+    "oslo": 3,
+    "copenhagen": 3,
+    "gothenburg": 2,
+    "bergen": 2,
+}
 WEEKEND_LIFT = 1.20
 
 CANCEL_RATE = 0.05
@@ -75,6 +86,9 @@ LOCATION_BY_ACCOUNT = {
     "stockholm": "Northern Sauna Stockholm",
     "helsinki": "Northern Sauna Helsinki",
     "oslo": "Northern Sauna Oslo",
+    "copenhagen": "Northern Sauna Copenhagen",
+    "gothenburg": "Northern Sauna Gothenburg",
+    "bergen": "Northern Sauna Bergen",
 }
 
 # ---------------------------------------------------------------------------
@@ -138,16 +152,17 @@ SC_QUERY_TERMS = [
     "northern sauna stockholm",
     "northern sauna helsinki",
     "northern sauna oslo",
+    "northern sauna copenhagen",
+    "northern sauna gothenburg",
+    "northern sauna bergen",
     "outdoor sauna booking",
     "wood-fired sauna",
-    "sauna voucher",
-    "sauna gift card",
-    "sauna day pass",
     "popup sauna",
 ]
 SC_PAGES = [
     "/", "/booking", "/about", "/contact",
     "/locations/stockholm", "/locations/helsinki", "/locations/oslo",
+    "/locations/copenhagen", "/locations/gothenburg", "/locations/bergen",
     "/pricing", "/membership", "/blog",
 ]
 
@@ -510,6 +525,9 @@ def _build_location_performance(
         "Northern Sauna Stockholm",
         "Northern Sauna Helsinki",
         "Northern Sauna Oslo",
+        "Northern Sauna Copenhagen",
+        "Northern Sauna Gothenburg",
+        "Northern Sauna Bergen",
     ),
     do_filter: bool = False,
 ) -> pd.DataFrame:
@@ -591,6 +609,9 @@ def _validate_location_performance(df: pd.DataFrame, label: str = "location_perf
         "Northern Sauna Stockholm",
         "Northern Sauna Helsinki",
         "Northern Sauna Oslo",
+        "Northern Sauna Copenhagen",
+        "Northern Sauna Gothenburg",
+        "Northern Sauna Bergen",
     }).all()
     assert (df["bookings"] == df["bookings_total"]).all(), (
         f"{label}: bookings/bookings_total mismatch"
